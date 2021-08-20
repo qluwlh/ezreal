@@ -18,7 +18,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wanglihua007/ezreal.git"
+    "url": "https://github.com/wanglihua007/ezreal.git",
+    "directory": "packages/cra-template-typescript"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"

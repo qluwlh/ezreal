@@ -1,7 +1,7 @@
 {
   "name": "@wanglihua/react-scripts",
   "version": "0.0.1",
-  "description": "> TODO: description",
+  "description": "react-scripts",
   "author": "wanglihua <wanglihua@innobuddy.com>",
   "homepage": "",
   "license": "ISC",
@@ -18,7 +18,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/wanglihua007/ezreal.git"
+    "url": "https://github.com/wanglihua007/ezreal.git",
+    "directory": "packages/react-scripts"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
