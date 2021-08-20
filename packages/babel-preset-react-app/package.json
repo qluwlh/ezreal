@@ -1,7 +1,7 @@
 {
   "name": "@wanglihua/babel-preset-react-app",
   "version": "0.0.1",
-  "description": "> TODO: description",
+  "description": "babel-preset-react-app",
   "author": "wanglihua <wanglihua@innobuddy.com>",
   "homepage": "",
   "license": "ISC",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@workgithub.com:wanglihua007/ezreal.git"
+    "url": "https://github.com/wanglihua007/ezreal.git"
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1"
