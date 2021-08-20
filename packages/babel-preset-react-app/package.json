@@ -4,7 +4,7 @@
   "description": "babel-preset-react-app",
   "author": "wanglihua <wanglihua@innobuddy.com>",
   "homepage": "",
-  "license": "ISC",
+  "license": "MIT",
   "main": "lib/babel-preset-react-app.js",
   "directories": {
     "lib": "lib",
