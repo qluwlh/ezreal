@@ -1,17 +1,13 @@
 {
   "name": "@wanglihua/cra-template-typescript",
   "version": "0.0.1",
-  "description": "cra-template-typescript",
+  "description": "The base TypeScript template for Create React App",
   "author": "wanglihua <wanglihua@innobuddy.com>",
   "homepage": "",
   "license": "MIT",
-  "main": "lib/cra-template-typescript.js",
-  "directories": {
-    "lib": "lib",
-    "test": "__tests__"
-  },
   "files": [
-    "lib"
+    "template",
+    "template.json"
   ],
   "publishConfig": {
     "access": "public"
@@ -21,7 +17,16 @@
     "url": "https://github.com/wanglihua007/ezreal.git",
     "directory": "packages/cra-template-typescript"
   },
-  "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+  "keywords": [
+    "react",
+    "create-react-app",
+    "template",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "bugs": {
+    "url": "https://github.com/facebook/create-react-app/issues"
   }
 }
