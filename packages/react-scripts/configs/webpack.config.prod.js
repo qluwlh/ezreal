@@ -1,25 +1,25 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
-const { merge } = require('webpack-merge')
-const TerserPlugin = require('terser-webpack-plugin')
-const baseConfig = require('./webpack.config.base')
-const webpack = require('webpack')
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const webpackPaths = require('./webpack.paths.js')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+const { merge } = require("webpack-merge");
+const TerserPlugin = require("terser-webpack-plugin");
+const baseConfig = require("./webpack.config.base");
+const webpack = require("webpack");
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpackPaths = require("./webpack.paths.js");
 
 const devtoolsConfig =
-  process.env.DEBUG_PROD === 'true'
+  process.env.DEBUG_PROD === "true"
     ? {
-        devtool: 'source-map',
+        devtool: "source-map",
       }
-    : {}
+    : {};
 
 module.exports = merge(baseConfig, {
   ...devtoolsConfig,
 
-  mode: 'production',
+  mode: "production",
 
   module: {
     rules: [
@@ -30,11 +30,11 @@ module.exports = merge(baseConfig, {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: './',
+              publicPath: "./",
             },
           },
-          'css-loader',
-          'sass-loader',
+          "css-loader",
+          "sass-loader",
         ],
       },
     ],
@@ -47,20 +47,20 @@ module.exports = merge(baseConfig, {
 
   plugins: [
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'production',
+      NODE_ENV: "production",
       DEBUG_PROD: false,
     }),
 
-    new MiniCssExtractPlugin({ filename: 'style.css' }),
+    new MiniCssExtractPlugin({ filename: "style.css" }),
 
     new BundleAnalyzerPlugin({
       analyzerMode:
-        process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',
-      openAnalyzer: process.env.OPEN_ANALYZER === 'true',
+        process.env.OPEN_ANALYZER === "true" ? "server" : "disabled",
+      openAnalyzer: process.env.OPEN_ANALYZER === "true",
     }),
     new HtmlWebpackPlugin({
-      filename: path.join('index.html'),
-      template: path.join(webpackPaths.appPublic, 'index.html'),
+      filename: path.join("index.html"),
+      template: path.join(webpackPaths.appPublic, "index.html"),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
@@ -68,7 +68,7 @@ module.exports = merge(baseConfig, {
       },
       isBrowser: false,
       env: process.env.NODE_ENV,
-      isDevelopment: process.env.NODE_ENV !== 'production',
+      isDevelopment: process.env.NODE_ENV !== "production",
     }),
   ],
-})
+});

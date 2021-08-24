@@ -140,8 +140,8 @@ module.exports = function (
 
   const templateScripts = templatePackage.scripts || {};
   appPackage.scripts = {
-    start: "react-scripts start",
-    build: "react-scripts build",
+    start: "ezreal start",
+    build: "ezreal build",
     ...templateScripts,
   };
 

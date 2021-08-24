@@ -29,7 +29,7 @@
     "scripts"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "ezreal": "./bin/react-scripts.js"
   },
   "types": "./lib/react-app.d.ts",
   "dependencies": {

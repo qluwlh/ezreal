@@ -1,7 +1,7 @@
 {
-  "name": "@wanglihua/create-react-app",
-  "version": "0.0.2",
-  "description": "create-react-app",
+  "name": "@wanglihua/create-ezreal-app",
+  "version": "0.0.1",
+  "description": "create-ezreal-app",
   "author": "wanglihua <wanglihua@innobuddy.com>",
   "homepage": "",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "yarn.lock.cached"
   ],
   "bin": {
-    "create-react-app": "./index.js"
+    "create-ezreal-app": "./index.js"
   },
   "publishConfig": {
     "access": "public"
@@ -19,7 +19,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/wanglihua007/ezreal.git",
-    "directory": "packages/create-react-app"
+    "directory": "packages/create-ezreal-app"
   },
   "dependencies": {
     "chalk": "4.1.0",
