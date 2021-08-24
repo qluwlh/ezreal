@@ -24,12 +24,9 @@
   },
   "files": [
     "bin",
-    "config",
+    "configs",
     "lib",
-    "scripts",
-    "template",
-    "template-typescript",
-    "utils"
+    "scripts"
   ],
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
