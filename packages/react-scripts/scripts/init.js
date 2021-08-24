@@ -11,8 +11,9 @@ const execSync = require("child_process").execSync;
 const spawn = require("react-dev-utils/crossSpawn");
 const { defaultBrowsers } = require("react-dev-utils/browsersHelper");
 const os = require("os");
-const verifyTypeScriptSetup = require("./utils/verifyTypeScriptSetup");
+const paths = require("../configs/webpack.paths");
 
+const verifyTypeScriptSetup = require("./utils/verifyTypeScriptSetup");
 function isInGitRepository() {
   try {
     execSync("git rev-parse --is-inside-work-tree", { stdio: "ignore" });
@@ -90,7 +91,6 @@ module.exports = function (
   const templatePath = path.dirname(
     require.resolve(`${templateName}/package.json`, { paths: [appPath] })
   );
-
   const templateJsonPath = path.join(templatePath, "template.json");
 
   let templateJson = {};
@@ -128,10 +128,8 @@ module.exports = function (
   ];
 
   // Keys from templatePackage that will be merged with appPackage
-  const templatePackageToMerge = ["dependencies", "scripts"];
+  const templatePackageToMerge = ["devDependencies", "dependencies", "scripts"];
 
-  // Keys from templatePackage that will be added to appPackage,
-  // replacing any existing entries.
   const templatePackageToReplace = Object.keys(templatePackage).filter(
     (key) => {
       return (
@@ -141,10 +139,6 @@ module.exports = function (
     }
   );
 
-  // Copy over some of the devDependencies
-  appPackage.dependencies = appPackage.dependencies || {};
-
-  // Setup the script rules
   const templateScripts = templatePackage.scripts || {};
   appPackage.scripts = {
     start: "react-scripts start",
@@ -152,7 +146,8 @@ module.exports = function (
     ...templateScripts,
   };
 
-  // Update scripts for Yarn users
+  appPackage.dependencies = appPackage.dependencies || {};
+
   if (useYarn) {
     appPackage.scripts = Object.entries(appPackage.scripts).reduce(
       (acc, [key, value]) => ({
@@ -163,15 +158,10 @@ module.exports = function (
     );
   }
 
-  // Setup the eslint config
-  appPackage.eslintConfig = {
-    extends: "@wanglihua@eslint-config-react-app",
-  };
+  appPackage.eslintConfig = { extends: "@wanglihua@eslint-config-react-app" };
 
-  // Setup the browsers list
   appPackage.browserslist = defaultBrowsers;
 
-  // Add templatePackage keys/values to appPackage, replacing existing entries
   templatePackageToReplace.forEach((key) => {
     appPackage[key] = templatePackage[key];
   });
@@ -180,14 +170,6 @@ module.exports = function (
     path.join(appPath, "package.json"),
     JSON.stringify(appPackage, null, 2) + os.EOL
   );
-
-  const readmeExists = fs.existsSync(path.join(appPath, "README.md"));
-  if (readmeExists) {
-    fs.renameSync(
-      path.join(appPath, "README.md"),
-      path.join(appPath, "README.old.md")
-    );
-  }
 
   // Copy the files for the user
   const templateDir = path.join(templatePath, "template");
@@ -216,7 +198,6 @@ module.exports = function (
 
   const gitignoreExists = fs.existsSync(path.join(appPath, ".gitignore"));
   if (gitignoreExists) {
-    // Append if there's already a `.gitignore` file there
     const data = fs.readFileSync(path.join(appPath, "gitignore"));
     fs.appendFileSync(path.join(appPath, ".gitignore"), data);
     fs.unlinkSync(path.join(appPath, "gitignore"));
@@ -230,7 +211,6 @@ module.exports = function (
     );
   }
 
-  // Initialize git repo
   let initializedGit = false;
 
   if (tryGitInit()) {
@@ -242,11 +222,12 @@ module.exports = function (
   let command;
   let remove;
   let args;
-
+  let depArgs = [];
+  let devDepArgs = [];
   if (useYarn) {
     command = "yarnpkg";
     remove = "remove";
-    args = ["add"];
+    args = ["--registry", "https://registry.npm.taobao.org", "add"];
   } else {
     command = "npm";
     remove = "uninstall";
@@ -258,45 +239,71 @@ module.exports = function (
     ].filter(Boolean);
   }
 
-  const dependenciesToInstall = Object.entries({
-    ...templatePackage.dependencies,
-    ...templatePackage.devDependencies,
-  });
+  const dependenciesToInstall = Object.entries(
+    templatePackage.dependencies || {}
+  );
   if (dependenciesToInstall.length) {
-    args = args.concat(
-      dependenciesToInstall.map(([dependency, version]) => {
+    depArgs = [
+      ...args,
+      ...dependenciesToInstall.map(([dependency, version]) => {
         return `${dependency}@${version}`;
-      })
-    );
+      }),
+    ];
+  }
+  const devDependenciesToInstall = Object.entries(
+    templatePackage.devDependencies || {}
+  );
+  if (devDependenciesToInstall.length) {
+    devDepArgs = [
+      ...args,
+      ...devDependenciesToInstall.map(([dependency, version]) => {
+        return `${dependency}@${version}`;
+      }),
+    ];
   }
 
-  if (templateName && args.length > 1) {
+  if (templateName && depArgs.length > 1) {
     console.log();
     console.log(`Installing template dependencies using ${command}...`);
 
-    const proc = spawn.sync(command, args, { stdio: "inherit" });
+    const proc = spawn.sync(command, depArgs, { stdio: "inherit" });
     if (proc.status !== 0) {
-      console.error(`\`${command} ${args.join(" ")}\` failed`);
+      console.error(`\`${command} ${depArgs.join(" ")}\` failed`);
       return;
     }
   }
-
-  if (args.find((arg) => arg.includes("typescript"))) {
+  if (templateName && devDepArgs.length > 1) {
     console.log();
-    verifyTypeScriptSetup();
+    console.log(`Installing template devDependencies using ${command}...`);
+
+    const proc = spawn.sync(
+      command,
+      [...devDepArgs, useYarn ? "--dev" : "--save-dev"],
+      {
+        stdio: "inherit",
+      }
+    );
+    if (proc.status !== 0) {
+      console.error(`\`${command} ${devDepArgs.join(" ")}\` failed`);
+      return;
+    }
+  }
+  if (devDepArgs.find((arg) => arg.includes("typescript"))) {
+    console.log();
+    // verifyTypeScriptSetup();
   }
 
   // Remove template
   console.log(`Removing template package using ${command}...`);
   console.log();
 
-  const proc = spawn.sync(command, [remove, templateName], {
-    stdio: "inherit",
-  });
-  if (proc.status !== 0) {
-    console.error(`\`${command} ${args.join(" ")}\` failed`);
-    return;
-  }
+  // const proc = spawn.sync(command, [remove, templateName], {
+  //   stdio: "inherit",
+  // });
+  // if (proc.status !== 0) {
+  //   console.error(`\`${command} ${args.join(" ")}\` failed`);
+  //   return;
+  // }
 
   // Create git commit if git repo was initialized
   if (initializedGit && tryGitCommit(appPath)) {
@@ -328,19 +335,6 @@ module.exports = function (
     chalk.cyan(`  ${displayedCommand} ${useYarn ? "" : "run "}build`)
   );
   console.log("    Bundles the app into static files for production.");
-  console.log();
-  console.log(chalk.cyan(`  ${displayedCommand} test`));
-  console.log("    Starts the test runner.");
-  console.log();
-  console.log(
-    chalk.cyan(`  ${displayedCommand} ${useYarn ? "" : "run "}eject`)
-  );
-  console.log(
-    "    Removes this tool and copies build dependencies, configuration files"
-  );
-  console.log(
-    "    and scripts into the app directory. If you do this, you can’t go back!"
-  );
   console.log();
   console.log("We suggest that you begin by typing:");
   console.log();
