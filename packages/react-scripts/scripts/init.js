@@ -11,7 +11,6 @@ const execSync = require("child_process").execSync;
 const spawn = require("react-dev-utils/crossSpawn");
 const { defaultBrowsers } = require("react-dev-utils/browsersHelper");
 const os = require("os");
-const paths = require("../configs/webpack.paths");
 
 const verifyTypeScriptSetup = require("./utils/verifyTypeScriptSetup");
 function isInGitRepository() {
