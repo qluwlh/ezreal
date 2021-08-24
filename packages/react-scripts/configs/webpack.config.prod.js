@@ -8,19 +8,20 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpackPaths = require("./webpack.paths.js");
-
-const devtoolsConfig =
-  process.env.DEBUG_PROD === "true"
-    ? {
-        devtool: "source-map",
-      }
-    : {};
-
+const utils = require("../utils");
 module.exports = merge(baseConfig, {
-  ...devtoolsConfig,
-
+  devtool: "source-map",
+  bail: true,
   mode: "production",
-
+  entry: [
+    "core-js",
+    "regenerator-runtime/runtime",
+    path.resolve(webpackPaths.appSrc, "index"),
+  ],
+  output: {
+    path: webpackPaths.appDist,
+    filename: "static/js/[name].[contenthash:8].js",
+  },
   module: {
     rules: [
       {
@@ -51,7 +52,10 @@ module.exports = merge(baseConfig, {
       DEBUG_PROD: false,
     }),
 
-    new MiniCssExtractPlugin({ filename: "style.css" }),
+    new MiniCssExtractPlugin({
+      filename: "static/css/[name].[contenthash:8].css",
+      chunkFilename: "static/css/[name].[contenthash:8].chunk.css",
+    }),
 
     new BundleAnalyzerPlugin({
       analyzerMode:

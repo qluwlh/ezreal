@@ -59,7 +59,11 @@ checkBrowsers(webpackPaths.appRoot, isInteractive)
       useTypeScript,
       webpack,
     });
-    const serverConfig = config.devServer;
+    const serverConfig = {
+      ...config.devServer,
+      host: HOST,
+      port,
+    };
     const devServer = new WebpackDevServer(compiler, serverConfig);
     devServer.listen(port, HOST, (err) => {
       if (err) {

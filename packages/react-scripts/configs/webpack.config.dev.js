@@ -1,16 +1,26 @@
-const webpack = require('webpack')
-const { merge } = require('webpack-merge')
-const baseConfig = require('./webpack.config.base')
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin')
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const webpackPaths = require('./webpack.paths.js')
-
-const port = process.env.PORT || 1212
+const webpack = require("webpack");
+const { merge } = require("webpack-merge");
+const baseConfig = require("./webpack.config.base");
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const webpackPaths = require("./webpack.paths.js");
+const { hasJsxRuntime } = require("../utils");
 
 module.exports = merge(baseConfig, {
-  devtool: 'inline-source-map',
-  mode: 'development',
+  devtool: "cheap-module-source-map",
+  mode: "development",
+  entry: [
+    // `webpack-dev-server/client?http://localhost:50051/dist`,
+    // "webpack/hot/only-dev-server",
+    // "core-js/stable",
+    // "regenerator-runtime/runtime",
+    path.resolve(webpackPaths.appSrc, "index"),
+  ],
+  output: {
+    path: webpackPaths.appDist,
+    filename: "static/js/bundle.js",
+  },
   module: {
     rules: [
       {
@@ -18,9 +28,17 @@ module.exports = merge(baseConfig, {
         exclude: /node_modules/,
         use: [
           {
-            loader: require.resolve('babel-loader'),
+            loader: require.resolve("babel-loader"),
             options: {
-              plugins: [require.resolve('react-refresh/babel')].filter(Boolean),
+              presets: [
+                [
+                  require.resolve("@wanglihua/babel-preset-react-app"),
+                  {
+                    runtime: hasJsxRuntime ? "automatic" : "classic",
+                  },
+                ],
+              ],
+              plugins: [require.resolve("react-refresh/babel")].filter(Boolean),
             },
           },
         ],
@@ -29,10 +47,10 @@ module.exports = merge(baseConfig, {
         test: /\.global\.css$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: "style-loader",
           },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
             },
@@ -43,13 +61,13 @@ module.exports = merge(baseConfig, {
         test: /^((?!\.global).)*\.css$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: "style-loader",
           },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: {
-                localIdentName: '[name]__[local]__[hash:base64:5]',
+                localIdentName: "[name]__[local]__[hash:base64:5]",
               },
               sourceMap: true,
               importLoaders: 1,
@@ -62,16 +80,16 @@ module.exports = merge(baseConfig, {
         test: /\.global\.(scss|sass)$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: "style-loader",
           },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
           },
         ],
       },
@@ -80,42 +98,42 @@ module.exports = merge(baseConfig, {
         test: /^((?!\.global).)*\.(scss|sass)$/,
         use: [
           {
-            loader: 'style-loader',
+            loader: "style-loader",
           },
           {
-            loader: '@teamsupercell/typings-for-css-modules-loader',
+            loader: "@teamsupercell/typings-for-css-modules-loader",
           },
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               modules: {
-                localIdentName: '[name]__[local]__[hash:base64:5]',
+                localIdentName: "[name]__[local]__[hash:base64:5]",
               },
               sourceMap: true,
               importLoaders: 1,
             },
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
           },
         ],
       },
     ],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new ReactRefreshWebpackPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development',
+      NODE_ENV: "development",
     }),
 
     new webpack.LoaderOptionsPlugin({
       debug: true,
     }),
     new HtmlWebpackPlugin({
-      filename: path.join('index.html'),
-      template: path.join(webpackPaths.appPublic, 'index.html'),
+      filename: path.join("index.html"),
+      template: path.join(webpackPaths.appPublic, "index.html"),
       minify: {
         collapseWhitespace: true,
         removeAttributeQuotes: true,
@@ -123,7 +141,7 @@ module.exports = merge(baseConfig, {
       },
       isBrowser: false,
       env: process.env.NODE_ENV,
-      isDevelopment: process.env.NODE_ENV !== 'production',
+      isDevelopment: process.env.NODE_ENV !== "production",
     }),
   ],
 
@@ -133,18 +151,15 @@ module.exports = merge(baseConfig, {
   },
 
   devServer: {
-    allowedHosts: ['ui.classroom.com'],
     contentBase: [webpackPaths.appDist, webpackPaths.appPublic],
-    publicPath: '/',
-    port,
     open: true,
     compress: true,
     hot: true,
-    noInfo: false,
-    stats: 'errors-only',
     inline: true,
+    noInfo: false,
+    stats: "errors-only",
     lazy: false,
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: { "Access-Control-Allow-Origin": "*" },
     watchOptions: {
       aggregateTimeout: 300,
       ignored: /node_modules/,
@@ -155,4 +170,4 @@ module.exports = merge(baseConfig, {
       disableDotRule: false,
     },
   },
-})
+});

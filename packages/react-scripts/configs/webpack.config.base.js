@@ -1,21 +1,17 @@
 const path = require("path");
 const webpack = require("webpack");
 const WebpackBar = require("webpackbar");
+const ESLintPlugin = require("eslint-webpack-plugin");
 
 const webpackPaths = require("./webpack.paths.js");
-const { dependencies: externals } = require("../package.json");
+const { dependencies: externals } = require(webpackPaths.appPackageJson);
 const envConfig = require("./env");
-const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
-
 const { NODE_ENV } = process.env;
+const isEnvDevelopment = NODE_ENV === "development";
+const utils = require("../utils");
+
 module.exports = {
   target: "web",
-  entry: path.resolve(webpackPaths.appSrc, "index"),
-  output: {
-    path: webpackPaths.appDist,
-    publicPath: "/",
-    filename: "static/js/[name].js",
-  },
   module: {
     rules: [
       {
@@ -25,6 +21,14 @@ module.exports = {
           loader: "babel-loader",
           options: {
             cacheDirectory: true,
+            presets: [
+              [
+                require.resolve("@wanglihua/babel-preset-react-app"),
+                {
+                  runtime: utils.hasJsxRuntime ? "automatic" : "classic",
+                },
+              ],
+            ],
           },
         },
       },
@@ -97,6 +101,7 @@ module.exports = {
   },
   resolve: {
     extensions: [".js", ".jsx", ".json", ".ts", ".tsx"],
+    modules: ["node_modules", webpackPaths.appNodeModules],
     alias: {
       "@": webpackPaths.appSrc,
     },
@@ -109,6 +114,32 @@ module.exports = {
     }),
     new webpack.EnvironmentPlugin({
       NODE_ENV: "production",
+    }),
+    new webpack.IgnorePlugin({
+      resourceRegExp: /^\.\/locale$/,
+      contextRegExp: /moment$/,
+    }),
+    new ESLintPlugin({
+      extensions: ["js", "mjs", "jsx", "ts", "tsx"],
+      formatter: require.resolve("react-dev-utils/eslintFormatter"),
+      eslintPath: require.resolve("eslint"),
+      failOnError: !isEnvDevelopment,
+      context: webpackPaths.appSrc,
+      cache: true,
+      cacheLocation: path.resolve(
+        webpackPaths.appNodeModules,
+        ".cache/.eslintcache"
+      ),
+      cwd: webpackPaths.appPath,
+      resolvePluginsRelativeTo: __dirname,
+      baseConfig: {
+        extends: [require.resolve("@wanglihua/eslint-config-react-app/base")],
+        rules: {
+          ...(!utils.hasJsxRuntime && {
+            "react/react-in-jsx-scope": "error",
+          }),
+        },
+      },
     }),
   ],
 };
