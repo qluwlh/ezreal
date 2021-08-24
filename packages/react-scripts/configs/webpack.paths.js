@@ -1,11 +1,13 @@
 const path = require("path");
 const getPublicUrlOrPath = require("react-dev-utils/getPublicUrlOrPath");
+const fs = require("fs");
+
+const appRoot = fs.realpathSync(process.cwd());
 
 const resolvePath = (resolveRoot) => (filePath) => {
   return path.join(resolveRoot, filePath);
 };
 
-const appRoot = path.join(__dirname, "..");
 const resolveApp = resolvePath(appRoot);
 
 const appSrc = resolveApp("src");

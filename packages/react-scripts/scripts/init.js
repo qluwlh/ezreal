@@ -289,7 +289,7 @@ module.exports = function (
   }
   if (devDepArgs.find((arg) => arg.includes("typescript"))) {
     console.log();
-    // verifyTypeScriptSetup();
+    verifyTypeScriptSetup();
   }
 
   // Remove template

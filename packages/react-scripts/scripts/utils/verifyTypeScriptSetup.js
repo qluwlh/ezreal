@@ -8,8 +8,6 @@ const paths = require("../../configs/webpack.paths");
 const os = require("os");
 const semver = require("semver");
 const immer = require("react-dev-utils/immer").produce;
-const resolveOwn = (relativePath) =>
-  path.resolve(__dirname, "..", relativePath);
 
 const hasJsxRuntime = (() => {
   if (process.env.DISABLE_NEW_JSX_TRANSFORM === "true") {
