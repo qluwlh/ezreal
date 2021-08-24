@@ -15,7 +15,7 @@ module.exports = merge(baseConfig, {
     // "webpack/hot/only-dev-server",
     // "core-js/stable",
     // "regenerator-runtime/runtime",
-    path.resolve(webpackPaths.appSrc, "index"),
+    webpackPaths.appIndexJs,
   ],
   output: {
     path: webpackPaths.appDist,

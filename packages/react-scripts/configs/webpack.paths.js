@@ -4,6 +4,31 @@ const fs = require("fs");
 
 const appRoot = fs.realpathSync(process.cwd());
 
+const moduleFileExtensions = [
+  "web.mjs",
+  "mjs",
+  "web.js",
+  "js",
+  "web.ts",
+  "ts",
+  "web.tsx",
+  "tsx",
+  "json",
+  "web.jsx",
+  "jsx",
+];
+const resolveModule = (resolveFn, filePath) => {
+  const extension = moduleFileExtensions.find((extension) =>
+    fs.existsSync(resolveFn(`${filePath}.${extension}`))
+  );
+
+  if (extension) {
+    return resolveFn(`${filePath}.${extension}`);
+  }
+
+  return resolveFn(`${filePath}.js`);
+};
+
 const resolvePath = (resolveRoot) => (filePath) => {
   return path.join(resolveRoot, filePath);
 };
@@ -32,7 +57,7 @@ module.exports = {
   appDist,
   appPublic,
   appHtml: resolvePublic("index.html"),
-  appIndexJs: resolveSrc("index.ts"),
+  appIndexJs: resolveModule(resolveSrc, "index"),
   appPackageJson: resolveApp("package.json"),
   appTsConfig: resolveApp("tsconfig.json"),
   appNodeModules: resolveApp("node_modules"),
