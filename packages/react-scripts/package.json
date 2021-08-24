@@ -46,6 +46,8 @@
     "@types/react-dom": "^17.0.9",
     "@typescript-eslint/eslint-plugin": "^4.29.2",
     "@typescript-eslint/parser": "^4.29.2",
+    "@wanglihua/babel-preset-react-app": "^0.0.3",
+    "@wanglihua/eslint-config-react-app": "^0.0.2",
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.2",
     "core-js": "^3.16.2",
