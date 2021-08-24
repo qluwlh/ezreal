@@ -296,13 +296,13 @@ module.exports = function (
   console.log(`Removing template package using ${command}...`);
   console.log();
 
-  // const proc = spawn.sync(command, [remove, templateName], {
-  //   stdio: "inherit",
-  // });
-  // if (proc.status !== 0) {
-  //   console.error(`\`${command} ${args.join(" ")}\` failed`);
-  //   return;
-  // }
+  const proc = spawn.sync(command, [remove, templateName], {
+    stdio: "inherit",
+  });
+  if (proc.status !== 0) {
+    console.error(`\`${command} ${args.join(" ")}\` failed`);
+    return;
+  }
 
   // Create git commit if git repo was initialized
   if (initializedGit && tryGitCommit(appPath)) {
