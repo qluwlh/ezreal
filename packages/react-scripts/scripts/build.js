@@ -45,7 +45,6 @@ function build(previousFileSizes) {
       if (err) {
         return reject(err);
       } else {
-        console.log(`stats`, stats);
         return resolve(stats);
       }
     });
