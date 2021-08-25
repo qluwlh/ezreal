@@ -157,8 +157,6 @@ module.exports = function (
     );
   }
 
-  appPackage.eslintConfig = { extends: "@wanglihua@eslint-config-react-app" };
-
   appPackage.browserslist = defaultBrowsers;
 
   templatePackageToReplace.forEach((key) => {
