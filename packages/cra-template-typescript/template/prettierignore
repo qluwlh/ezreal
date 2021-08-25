@@ -1,0 +1,9 @@
+.DS_Store
+**/*.md
+**/*.svg
+**/*.ejs
+**/*.html
+package.json
+node_modules
+dist
+

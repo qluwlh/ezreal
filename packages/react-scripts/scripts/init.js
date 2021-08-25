@@ -180,7 +180,16 @@ module.exports = function (
     );
     return;
   }
-
+  fs.moveSync(
+    path.join(appPath, "prettierrc"),
+    path.join(appPath, ".prettierrc"),
+    []
+  );
+  fs.moveSync(
+    path.join(appPath, "prettierignore"),
+    path.join(appPath, ".prettierignore"),
+    []
+  );
   // modifies README.md commands based on user used package manager.
   if (useYarn) {
     try {

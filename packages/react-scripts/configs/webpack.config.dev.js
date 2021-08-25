@@ -11,10 +11,10 @@ module.exports = merge(baseConfig, {
   devtool: "cheap-module-source-map",
   mode: "development",
   entry: [
-    // `webpack-dev-server/client?http://localhost:50051/dist`,
+    // `webpack-dev-server/client?http://localhost:${port}/dist`,
     // "webpack/hot/only-dev-server",
-    // "core-js/stable",
-    // "regenerator-runtime/runtime",
+    require.resolve("core-js/stable"),
+    require.resolve("regenerator-runtime/runtime"),
     webpackPaths.appIndexJs,
   ],
   output: {
@@ -157,7 +157,6 @@ module.exports = merge(baseConfig, {
     hot: true,
     inline: true,
     noInfo: false,
-    stats: "errors-only",
     lazy: false,
     headers: { "Access-Control-Allow-Origin": "*" },
     watchOptions: {

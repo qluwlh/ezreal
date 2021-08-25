@@ -8,15 +8,14 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpackPaths = require("./webpack.paths.js");
-const utils = require("../utils");
 module.exports = merge(baseConfig, {
   devtool: "source-map",
   bail: true,
   mode: "production",
   entry: [
-    "core-js",
-    "regenerator-runtime/runtime",
-    path.resolve(webpackPaths.appSrc, "index"),
+    require.resolve("core-js"),
+    require.resolve("regenerator-runtime/runtime"),
+    webpackPaths.appIndexJs,
   ],
   output: {
     path: webpackPaths.appDist,
