@@ -1,6 +1,6 @@
 {
   "name": "@wanglihua/react-scripts",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "react-scripts",
   "author": "wanglihua <wanglihua@innobuddy.com>",
   "homepage": "",
@@ -38,7 +38,7 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
     "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
     "@wanglihua/babel-preset-react-app": "^0.0.3",
-    "@wanglihua/eslint-config-react-app": "^0.0.2",
+    "@wanglihua/eslint-config-react-app": "^0.0.3",
     "babel-loader": "^8.2.2",
     "chalk": "^4.1.2",
     "core-js": "^3.16.2",
