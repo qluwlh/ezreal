@@ -4,98 +4,83 @@ const WebpackBar = require("webpackbar");
 const ESLintPlugin = require("eslint-webpack-plugin");
 
 const webpackPaths = require("./webpack.paths.js");
-const { dependencies: externals } = require(webpackPaths.appPackageJson);
 const envConfig = require("./env");
 const { NODE_ENV } = process.env;
 const isEnvDevelopment = NODE_ENV === "development";
 const utils = require("../utils");
 
+const fontRules = [
+  // WOFF Font
+  {
+    test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+    use: {
+      loader: require.resolve("url-loader"),
+      options: {
+        limit: 10000,
+        mimetype: "application/font-woff",
+      },
+    },
+  },
+  // WOFF2 Font
+  {
+    test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+    use: {
+      loader: require.resolve("url-loader"),
+      options: {
+        limit: 10000,
+        mimetype: "application/font-woff",
+      },
+    },
+  },
+  // OTF Font
+  {
+    test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
+    use: {
+      loader: require.resolve("url-loader"),
+      options: {
+        limit: 10000,
+        mimetype: "font/otf",
+      },
+    },
+  },
+  // TTF Font
+  {
+    test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+    use: {
+      loader: require.resolve("url-loader"),
+      options: {
+        limit: 10000,
+        mimetype: "application/octet-stream",
+      },
+    },
+  },
+  // EOT Font
+  {
+    test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+    use: "file-loader",
+  },
+  // SVG Font
+  {
+    test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+    use: {
+      loader: require.resolve("url-loader"),
+      options: {
+        limit: 10000,
+        mimetype: "image/svg+xml",
+      },
+    },
+  },
+];
+
 module.exports = {
   target: "web",
   module: {
     rules: [
-      {
-        test: /\.[jt]sx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            cacheDirectory: true,
-            presets: [
-              [
-                require.resolve("@wanglihua/babel-preset-react-app"),
-                {
-                  runtime: utils.hasJsxRuntime ? "automatic" : "classic",
-                },
-              ],
-            ],
-          },
-        },
-      },
-      // WOFF Font
-      {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            limit: 10000,
-            mimetype: "application/font-woff",
-          },
-        },
-      },
-      // WOFF2 Font
-      {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            limit: 10000,
-            mimetype: "application/font-woff",
-          },
-        },
-      },
-      // OTF Font
-      {
-        test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            limit: 10000,
-            mimetype: "font/otf",
-          },
-        },
-      },
-      // TTF Font
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            limit: 10000,
-            mimetype: "application/octet-stream",
-          },
-        },
-      },
-      // EOT Font
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: "file-loader",
-      },
-      // SVG Font
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: "url-loader",
-          options: {
-            limit: 10000,
-            mimetype: "image/svg+xml",
-          },
-        },
-      },
+      ...fontRules,
       // Common Image Formats
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
-        use: "url-loader",
+        use: require.resolve("url-loader"),
       },
     ],
   },

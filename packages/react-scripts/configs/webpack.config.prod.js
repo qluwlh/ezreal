@@ -8,6 +8,7 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpackPaths = require("./webpack.paths.js");
+const utils = require("../utils");
 module.exports = merge(baseConfig, {
   devtool: "source-map",
   bail: true,
@@ -23,6 +24,24 @@ module.exports = merge(baseConfig, {
   },
   module: {
     rules: [
+      {
+        test: /\.[jt]sx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            cacheDirectory: true,
+            presets: [
+              [
+                require.resolve("@wanglihua/babel-preset-react-app"),
+                {
+                  runtime: utils.hasJsxRuntime ? "automatic" : "classic",
+                },
+              ],
+            ],
+          },
+        },
+      },
       {
         // CSS/SCSS
         test: /\.s?css$/,

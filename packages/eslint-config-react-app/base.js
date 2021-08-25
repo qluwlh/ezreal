@@ -26,7 +26,7 @@ module.exports = {
     sourceType: "module",
     requireConfigFile: false,
     babelOptions: {
-      presets: ["@wanglihua/babel-preset-react-app/prod"],
+      presets: [require.resolve("@wanglihua/babel-preset-react-app/prod")],
     },
   },
 

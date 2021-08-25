@@ -3,5 +3,8 @@
     "no-console": "off",
     "global-require": "off",
     "import/no-dynamic-require": "off"
+  },
+  "parserOptions": {
+    "ecmaVersion": 6
   }
 }

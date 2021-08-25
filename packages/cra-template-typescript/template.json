@@ -13,9 +13,6 @@
     "scripts": {
       "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'"
     },
-    "eslintConfig": {
-      "extends": ["@wanglihua/react-app"]
-    },
     "gitHooks": {
       "pre-commit": "lint-staged"
     },

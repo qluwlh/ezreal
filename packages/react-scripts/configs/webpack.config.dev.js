@@ -6,6 +6,11 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpackPaths = require("./webpack.paths.js");
 const { hasJsxRuntime } = require("../utils");
+const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
+const envConfig = require("./env");
+const env = envConfig.getClientEnvironment(
+  webpackPaths.publicUrlOrPath.slice(0, -1)
+);
 
 module.exports = merge(baseConfig, {
   devtool: "cheap-module-source-map",
@@ -47,10 +52,10 @@ module.exports = merge(baseConfig, {
         test: /\.global\.css$/,
         use: [
           {
-            loader: "style-loader",
+            loader: require.resolve("style-loader"),
           },
           {
-            loader: "css-loader",
+            loader: require.resolve("css-loader"),
             options: {
               sourceMap: true,
             },
@@ -61,10 +66,10 @@ module.exports = merge(baseConfig, {
         test: /^((?!\.global).)*\.css$/,
         use: [
           {
-            loader: "style-loader",
+            loader: require.resolve("style-loader"),
           },
           {
-            loader: "css-loader",
+            loader: require.resolve("css-loader"),
             options: {
               modules: {
                 localIdentName: "[name]__[local]__[hash:base64:5]",
@@ -80,16 +85,16 @@ module.exports = merge(baseConfig, {
         test: /\.global\.(scss|sass)$/,
         use: [
           {
-            loader: "style-loader",
+            loader: require.resolve("style-loader"),
           },
           {
-            loader: "css-loader",
+            loader: require.resolve("css-loader"),
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: "sass-loader",
+            loader: require.resolve("sass-loader"),
           },
         ],
       },
@@ -98,13 +103,15 @@ module.exports = merge(baseConfig, {
         test: /^((?!\.global).)*\.(scss|sass)$/,
         use: [
           {
-            loader: "style-loader",
+            loader: require.resolve("style-loader"),
           },
           {
-            loader: "@teamsupercell/typings-for-css-modules-loader",
+            loader: require.resolve(
+              "@teamsupercell/typings-for-css-modules-loader"
+            ),
           },
           {
-            loader: "css-loader",
+            loader: require.resolve("css-loader"),
             options: {
               modules: {
                 localIdentName: "[name]__[local]__[hash:base64:5]",
@@ -114,7 +121,7 @@ module.exports = merge(baseConfig, {
             },
           },
           {
-            loader: "sass-loader",
+            loader: require.resolve("sass-loader"),
           },
         ],
       },
@@ -143,6 +150,7 @@ module.exports = merge(baseConfig, {
       env: process.env.NODE_ENV,
       isDevelopment: process.env.NODE_ENV !== "production",
     }),
+    new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
   ],
 
   node: {
@@ -158,6 +166,7 @@ module.exports = merge(baseConfig, {
     inline: true,
     noInfo: false,
     lazy: false,
+    stats: "errors-warnings",
     headers: { "Access-Control-Allow-Origin": "*" },
     watchOptions: {
       aggregateTimeout: 300,
