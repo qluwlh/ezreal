@@ -51,23 +51,17 @@ module.exports = merge(baseConfig, {
       {
         test: /\.global\.css$/,
         use: [
-          {
-            loader: require.resolve("style-loader"),
-          },
+          { loader: require.resolve("style-loader") },
           {
             loader: require.resolve("css-loader"),
-            options: {
-              sourceMap: true,
-            },
+            options: { sourceMap: true },
           },
         ],
       },
       {
         test: /^((?!\.global).)*\.css$/,
         use: [
-          {
-            loader: require.resolve("style-loader"),
-          },
+          { loader: require.resolve("style-loader") },
           {
             loader: require.resolve("css-loader"),
             options: {
@@ -84,27 +78,21 @@ module.exports = merge(baseConfig, {
       {
         test: /\.global\.(scss|sass)$/,
         use: [
-          {
-            loader: require.resolve("style-loader"),
-          },
+          { loader: require.resolve("style-loader") },
           {
             loader: require.resolve("css-loader"),
             options: {
               sourceMap: true,
             },
           },
-          {
-            loader: require.resolve("sass-loader"),
-          },
+          { loader: require.resolve("sass-loader") },
         ],
       },
       // SASS support - compile all other .scss files and pipe it to style.css
       {
         test: /^((?!\.global).)*\.(scss|sass)$/,
         use: [
-          {
-            loader: require.resolve("style-loader"),
-          },
+          { loader: require.resolve("style-loader") },
           {
             loader: require.resolve(
               "@teamsupercell/typings-for-css-modules-loader"
@@ -131,24 +119,11 @@ module.exports = merge(baseConfig, {
     new ReactRefreshWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: "development",
-    }),
-
-    new webpack.LoaderOptionsPlugin({
-      debug: true,
-    }),
+    new webpack.EnvironmentPlugin({ NODE_ENV: "development" }),
+    new webpack.LoaderOptionsPlugin({ debug: true }),
     new HtmlWebpackPlugin({
-      filename: path.join("index.html"),
       template: path.join(webpackPaths.appPublic, "index.html"),
-      minify: {
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
-        removeComments: true,
-      },
-      isBrowser: false,
-      env: process.env.NODE_ENV,
-      isDevelopment: process.env.NODE_ENV !== "production",
+      inject: true,
     }),
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
   ],

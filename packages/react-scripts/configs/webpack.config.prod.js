@@ -9,6 +9,11 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpackPaths = require("./webpack.paths.js");
 const utils = require("../utils");
+const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
+const envConfig = require("./env");
+const env = envConfig.getClientEnvironment(
+  webpackPaths.publicUrlOrPath.slice(0, -1)
+);
 module.exports = merge(baseConfig, {
   devtool: "source-map",
   bail: true,
@@ -28,7 +33,7 @@ module.exports = merge(baseConfig, {
         test: /\.[jt]sx?$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader",
+          loader: require.resolve("babel-loader"),
           options: {
             cacheDirectory: true,
             presets: [
@@ -46,14 +51,14 @@ module.exports = merge(baseConfig, {
         // CSS/SCSS
         test: /\.s?css$/,
         use: [
+          MiniCssExtractPlugin.loader,
           {
-            loader: MiniCssExtractPlugin.loader,
+            loader: require.resolve("css-loader"),
             options: {
-              publicPath: "./",
+              modules: true,
             },
           },
-          "css-loader",
-          "sass-loader",
+          require.resolve("sass-loader"),
         ],
       },
     ],
@@ -81,16 +86,21 @@ module.exports = merge(baseConfig, {
       openAnalyzer: process.env.OPEN_ANALYZER === "true",
     }),
     new HtmlWebpackPlugin({
-      filename: path.join("index.html"),
       template: path.join(webpackPaths.appPublic, "index.html"),
+      inject: true,
       minify: {
-        collapseWhitespace: true,
-        removeAttributeQuotes: true,
         removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
       },
-      isBrowser: false,
-      env: process.env.NODE_ENV,
-      isDevelopment: process.env.NODE_ENV !== "production",
     }),
+    new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
   ],
 });
