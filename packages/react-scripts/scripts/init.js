@@ -50,7 +50,7 @@ function tryGitCommit(appPath) {
   try {
     execSync("git add -A", { stdio: "ignore" });
     execSync(
-      'git commit -m "[Init]: Initialize project using @wanglihua/create-react-app"',
+      'git commit -m "[Init]: Initialize project using @wanglihua/create-ezreal-app"',
       { stdio: "ignore" }
     );
     return true;
@@ -186,6 +186,11 @@ module.exports = function (
   fs.moveSync(
     path.join(appPath, "prettierignore"),
     path.join(appPath, ".prettierignore"),
+    []
+  );
+  fs.moveSync(
+    path.join(appPath, "editorconfig"),
+    path.join(appPath, ".editorconfig"),
     []
   );
   // modifies README.md commands based on user used package manager.
