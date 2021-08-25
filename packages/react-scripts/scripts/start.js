@@ -53,10 +53,12 @@ checkBrowsers(webpackPaths.appRoot, isInteractive)
       port,
       webpackPaths.publicUrlOrPath.slice(0, -1)
     );
-    config.plugins.push(
-      new webpack.container.ModuleFederationPlugin(userConfig.mf)
-    );
-    config.plugins.push(new webpack.DefinePlugin(userConfig.define));
+    if (userConfig.mf && Object.keys(userConfig.mf).length) {
+      config.plugins.push(
+        new webpack.container.ModuleFederationPlugin(userConfig.mf)
+      );
+    }
+    config.plugins.push(new webpack.DefinePlugin(userConfig.define || {}));
     const compiler = createCompiler({
       appName,
       config,
