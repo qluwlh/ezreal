@@ -8,61 +8,22 @@ const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpackPaths = require("./webpack.paths.js");
-const utils = require("../utils");
 const InterpolateHtmlPlugin = require("react-dev-utils/InterpolateHtmlPlugin");
-const envConfig = require("./env");
-const env = envConfig.getClientEnvironment(
-  webpackPaths.publicUrlOrPath.slice(0, -1)
-);
+const { getClientEnvironment } = require("./env");
+const env = getClientEnvironment(webpackPaths.publicUrlOrPath.slice(0, -1));
 module.exports = merge(baseConfig, {
-  devtool: "source-map",
+  devtool: false,
   bail: true,
   mode: "production",
-  entry: [
-    require.resolve("core-js"),
-    require.resolve("regenerator-runtime/runtime"),
-    webpackPaths.appIndexJs,
-  ],
+
   output: {
     path: webpackPaths.appDist,
     filename: "static/js/[name].[contenthash:8].js",
+    chunkFilename: "static/js/[name].[contenthash:8].chunk.js",
+    assetModuleFilename: "static/media/[name].[hash][ext]",
+    publicPath: webpackPaths.publicUrlOrPath,
   },
-  module: {
-    rules: [
-      {
-        test: /\.[jt]sx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: require.resolve("babel-loader"),
-          options: {
-            cacheDirectory: true,
-            presets: [
-              [
-                require.resolve("@wanglihua/babel-preset-react-app"),
-                {
-                  runtime: utils.hasJsxRuntime ? "automatic" : "classic",
-                },
-              ],
-            ],
-          },
-        },
-      },
-      {
-        // CSS/SCSS
-        test: /\.s?css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: require.resolve("css-loader"),
-            options: {
-              modules: true,
-            },
-          },
-          require.resolve("sass-loader"),
-        ],
-      },
-    ],
-  },
+  module: { rules: [] },
 
   optimization: {
     minimize: true,

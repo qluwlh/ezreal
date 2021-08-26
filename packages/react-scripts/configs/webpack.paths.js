@@ -64,4 +64,8 @@ module.exports = {
   yarnLockFile: resolveApp("yarn.lock"),
   appTypeDeclarations: resolveSrc("react-app-env.d.ts"),
   publicUrlOrPath,
+  resolveSrc,
+  resolveApp,
+  resolveDist,
+  resolvePublic,
 };

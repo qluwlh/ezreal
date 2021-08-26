@@ -11,10 +11,11 @@ const chalk = require("react-dev-utils/chalk");
 const fs = require("fs-extra");
 const webpack = require("webpack");
 const webpackPaths = require("../configs/webpack.paths.js");
-const config = require("../configs/webpack.config.prod");
+const baseConfig = require("../configs/webpack.config.prod");
 const { checkBrowsers } = require("react-dev-utils/browsersHelper");
 const FileSizeReporter = require("react-dev-utils/FileSizeReporter");
-
+const { mergeConfig } = require("../utils/initConfig");
+const config = mergeConfig(baseConfig);
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
 

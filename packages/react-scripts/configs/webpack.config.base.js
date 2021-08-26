@@ -2,81 +2,26 @@ const path = require("path");
 const webpack = require("webpack");
 const WebpackBar = require("webpackbar");
 const ESLintPlugin = require("eslint-webpack-plugin");
-
 const webpackPaths = require("./webpack.paths.js");
-const { NODE_ENV } = process.env;
-const isEnvDevelopment = NODE_ENV === "development";
-const utils = require("../utils");
 const ExternalTemplateRemotesPlugin = require("external-remotes-plugin");
+const { getFontLoaders } = require("./font");
+const { getFileLoaders: getImageLoaders } = require("./file");
+const { getStyleLoaders } = require("./style");
+const { getBabelLoaders } = require("./babel");
+
 module.exports = {
   target: "web",
+  entry: [
+    require.resolve("core-js/stable"),
+    require.resolve("regenerator-runtime/runtime"),
+    webpackPaths.appIndexJs,
+  ],
   module: {
     rules: [
-      // WOFF Font
-      {
-        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: require.resolve("url-loader"),
-          options: {
-            limit: 10000,
-            mimetype: "application/font-woff",
-          },
-        },
-      },
-      // WOFF2 Font
-      {
-        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: require.resolve("url-loader"),
-          options: {
-            limit: 10000,
-            mimetype: "application/font-woff",
-          },
-        },
-      },
-      // OTF Font
-      {
-        test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: require.resolve("url-loader"),
-          options: {
-            limit: 10000,
-            mimetype: "font/otf",
-          },
-        },
-      },
-      // TTF Font
-      {
-        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: require.resolve("url-loader"),
-          options: {
-            limit: 10000,
-            mimetype: "application/octet-stream",
-          },
-        },
-      },
-      // EOT Font
-      {
-        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        use: "file-loader",
-      },
-      // SVG Font
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        use: {
-          loader: require.resolve("url-loader"),
-          options: {
-            limit: 10000,
-            mimetype: "image/svg+xml",
-          },
-        },
-      },
-      // Common Image Formats
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
-        use: require.resolve("url-loader"),
-      },
+      ...getBabelLoaders(),
+      ...getStyleLoaders(),
+      ...getFontLoaders(),
+      ...getImageLoaders(),
     ],
   },
   resolve: {
@@ -94,26 +39,21 @@ module.exports = {
       contextRegExp: /moment$/,
     }),
     new ESLintPlugin({
+      baseConfig: {},
       extensions: ["js", "mjs", "jsx", "ts", "tsx"],
-      formatter: require.resolve("react-dev-utils/eslintFormatter"),
-      eslintPath: require.resolve("eslint"),
-      failOnError: !isEnvDevelopment,
+      cwd: webpackPaths.appPath,
       context: webpackPaths.appSrc,
+      files: ["src/**/*.{ts,tsx,js,jsx}"],
+      // overrideConfigFile: webpackPaths.resolveApp(".eslintrc.js"),
+      // eslintPath: require.resolve('eslint'),
       cache: true,
       cacheLocation: path.resolve(
         webpackPaths.appNodeModules,
         ".cache/.eslintcache"
       ),
-      cwd: webpackPaths.appPath,
-      resolvePluginsRelativeTo: __dirname,
-      baseConfig: {
-        extends: [require.resolve("@wanglihua/eslint-config-react-app/base")],
-        rules: {
-          ...(!utils.hasJsxRuntime && {
-            "react/react-in-jsx-scope": "error",
-          }),
-        },
-      },
+      fix: true,
+      threads: true,
+      lintDirtyModulesOnly: false,
     }),
   ],
 };

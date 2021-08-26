@@ -19,11 +19,10 @@ const {
   prepareUrls,
 } = require("react-dev-utils/WebpackDevServerUtils");
 const openBrowser = require("react-dev-utils/openBrowser");
-const { mergeConfig, getUserConfig } = require("../utils/initConfig");
+const { mergeConfig } = require("../utils/initConfig");
 
 const baseConfig = require("../configs/webpack.config.dev");
 const webpackPaths = require("../configs/webpack.paths.js");
-const userConfig = getUserConfig();
 const config = mergeConfig(baseConfig);
 const useYarn = fs.existsSync(webpackPaths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
@@ -53,12 +52,6 @@ checkBrowsers(webpackPaths.appRoot, isInteractive)
       port,
       webpackPaths.publicUrlOrPath.slice(0, -1)
     );
-    if (userConfig.mf && Object.keys(userConfig.mf).length) {
-      config.plugins.push(
-        new webpack.container.ModuleFederationPlugin(userConfig.mf)
-      );
-    }
-    config.plugins.push(new webpack.DefinePlugin(userConfig.define || {}));
     const compiler = createCompiler({
       appName,
       config,
