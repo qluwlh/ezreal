@@ -49,17 +49,6 @@ const getFontLoaders = () => {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
       use: "file-loader",
     },
-    // SVG Font
-    {
-      test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-      use: {
-        loader: require.resolve("url-loader"),
-        options: {
-          limit: 10000,
-          mimetype: "image/svg+xml",
-        },
-      },
-    },
   ];
 };
 module.exports = {
