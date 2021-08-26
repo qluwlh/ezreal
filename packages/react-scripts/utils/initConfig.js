@@ -15,8 +15,11 @@ function getUserConfig() {
   const configFile = DEFAULT_CONFIG_FILES.find((file) => {
     return existsSync(path.join(cwd, file));
   });
+  if (!configFile) {
+    return {};
+  }
   const genFile = require(path.join(cwd, configFile));
-  return configFile ? genFile(webpack) : {};
+  return genFile(webpack) || {};
 }
 
 function mergeConfig(defaultConfig) {
