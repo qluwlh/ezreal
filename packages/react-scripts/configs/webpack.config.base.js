@@ -44,8 +44,6 @@ module.exports = {
       cwd: webpackPaths.appPath,
       context: webpackPaths.appSrc,
       files: ["src/**/*.{ts,tsx,js,jsx}"],
-      // overrideConfigFile: webpackPaths.resolveApp(".eslintrc.js"),
-      // eslintPath: require.resolve('eslint'),
       cache: true,
       cacheLocation: path.resolve(
         webpackPaths.appNodeModules,

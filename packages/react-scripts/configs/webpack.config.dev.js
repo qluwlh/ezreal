@@ -21,7 +21,7 @@ module.exports = merge(baseConfig, {
   },
   module: { rules: [] },
   plugins: [
-    new ReactRefreshWebpackPlugin(),
+    new ReactRefreshWebpackPlugin({ overlay: false }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.EnvironmentPlugin({ NODE_ENV: "development" }),
@@ -32,9 +32,5 @@ module.exports = merge(baseConfig, {
     }),
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
   ],
-  node: {
-    __dirname: false,
-    __filename: false,
-  },
   devServer,
 });

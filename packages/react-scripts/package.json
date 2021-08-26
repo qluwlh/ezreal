@@ -35,7 +35,7 @@
   "types": "./lib/react-app.d.ts",
   "dependencies": {
     "@babel/core": "^7.15.0",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.0-rc.5",
     "@teamsupercell/typings-for-css-modules-loader": "^2.5.1",
     "@wanglihua/babel-preset-react-app": "^0.0.3",
     "babel-loader": "^8.2.2",
@@ -70,7 +70,7 @@
     "url-loader": "^4.1.1",
     "webpack": "^5.50.0",
     "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-dev-server": "^3.11.2",
+    "webpack-dev-server": "^4.0.0-rc.1",
     "webpack-merge": "^5.8.0",
     "webpackbar": "^5.0.0-3"
   },
