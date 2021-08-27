@@ -1,11 +1,8 @@
-# `@wanglihua/cra-template-typescript`
+# @wanglihua/cra-template-typescript
 
-> TODO: description
+This is the official TypeScript template for [@wanglihua/create-ezreal-app](https://github.com/wanglihua007/ezreal/).
 
-## Usage
+For more information, please refer to:
 
-```
-const craTemplateTypescript = require('@wanglihua/cra-template-typescript');
-
-// TODO: DEMONSTRATE API
-```
+- [Getting Started](https://create-react-app.dev/docs/getting-started) – How to create a new app.
+- [User Guide](https://create-react-app.dev) – How to develop apps bootstrapped with Create React App.
