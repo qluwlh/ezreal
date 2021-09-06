@@ -23,6 +23,7 @@
       "web-vitals": "^1.0.1"
     },
     "scripts": {
+      "release": "standard-version",
       "lint": "yarn lint:js && yarn lint:style && yarn lint:prettier",
       "lint:js": "eslint \"*/**/*.{js,jsx,ts,tsx}\" --cache --format=pretty",
       "lint:style": "stylelint \"*/**/*.{css,less,scss}\"",
