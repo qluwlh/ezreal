@@ -1,5 +1,5 @@
 module.exports = {
-  extends: ["soraka"],
+  extends: ['soraka'],
   rules: {},
   globals: {},
-};
+}
