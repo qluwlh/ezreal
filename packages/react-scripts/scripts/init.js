@@ -161,30 +161,8 @@ module.exports = function (appPath, appName, verbose, originalDirectory, templat
     console.error(`Could not locate supplied template: ${chalk.green(templateDir)}`)
     return
   }
-  // modifies README.md commands based on user used package manager.
-  if (useYarn) {
-    try {
-      const readme = fs.readFileSync(path.join(appPath, 'README.md'), 'utf8')
-      fs.writeFileSync(
-        path.join(appPath, 'README.md'),
-        readme.replace(/(npm run |npm )/g, 'yarn '),
-        'utf8'
-      )
-    } catch (err) {
-      // Silencing the error. As it fall backs to using default npm commands.
-    }
-  }
 
-  const gitignoreExists = fs.existsSync(path.join(appPath, '.gitignore'))
-  if (gitignoreExists) {
-    const data = fs.readFileSync(path.join(appPath, 'gitignore'))
-    fs.appendFileSync(path.join(appPath, '.gitignore'), data)
-    fs.unlinkSync(path.join(appPath, 'gitignore'))
-  } else {
-    // Rename gitignore after the fact to prevent npm from renaming it to .npmignore
-    // See: https://github.com/npm/npm/issues/1862
-    fs.moveSync(path.join(appPath, 'gitignore'), path.join(appPath, '.gitignore'), [])
-  }
+  fs.moveSync(path.join(appPath, 'gitignore'), path.join(appPath, '.gitignore'), [])
 
   let initializedGit = false
 
