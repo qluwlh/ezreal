@@ -1,6 +1,8 @@
 {
   "package": {
     "devDependencies": {
+      "@commitlint/cli": "^13.1.0",
+      "@commitlint/config-conventional": "^13.1.0",
       "@types/node": "^12.0.0",
       "@types/react": "^17.0.0",
       "@types/react-dom": "^17.0.0",
@@ -22,7 +24,7 @@
     },
     "scripts": {
       "lint": "yarn lint:js && yarn lint:style && yarn lint:prettier",
-      "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx, --format=pretty",
+      "lint:js": "eslint \"*/**/*.{js,jsx,ts,tsx}\" --cache --format=pretty",
       "lint:style": "stylelint \"*/**/*.{css,less,scss}\"",
       "lint:prettier": "prettier --check \"*/**/*\" --end-of-line auto",
       "lint:fix": "yarn lint:js --fix && yarn lint:style --fix && yarn prettier",
@@ -32,9 +34,9 @@
       "commit": "git-cz"
     },
     "lint-staged": {
-      "**/*.{css,scss.less}": "yarn lint:style",
-      "**/*.{js,jsx,ts,tsx}": "yarn lint:js",
-      "**/*.{js,jsx,ts,tsx,css,less,scss}": "yarn lint:prettier"
+      "*/**/*.{css,scss.less}": "yarn lint:style",
+      "*/**/*.{js,jsx,ts,tsx}": "yarn lint:js",
+      "*/**/*.{js,jsx,ts,tsx,css,less,scss}": "yarn lint:prettier"
     },
     "config": {
       "commitizen": {

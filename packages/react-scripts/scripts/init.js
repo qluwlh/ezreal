@@ -263,10 +263,10 @@ module.exports = function (appPath, appName, verbose, originalDirectory, templat
   }
 
   // Create git commit if git repo was initialized
-  // if (initializedGit && tryGitCommit(appPath)) {
-  //   console.log()
-  //   console.log('Created git commit.')
-  // }
+  if (initializedGit && tryGitCommit(appPath)) {
+    console.log()
+    console.log('Created git commit.')
+  }
 
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for
