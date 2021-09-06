@@ -50,7 +50,7 @@ function tryGitCommit(appPath) {
   try {
     execSync("git add -A", { stdio: "ignore" });
     execSync(
-      'git commit -m "[Init]: Initialize project using @wanglihua/create-ezreal-app"',
+      'git commit -m "build(init): 使用@wanglihua/create-ezreal-app初始化项目"',
       { stdio: "ignore" }
     );
     return true;
@@ -178,21 +178,6 @@ module.exports = function (
     );
     return;
   }
-  fs.moveSync(
-    path.join(appPath, "prettierrc"),
-    path.join(appPath, ".prettierrc"),
-    []
-  );
-  fs.moveSync(
-    path.join(appPath, "prettierignore"),
-    path.join(appPath, ".prettierignore"),
-    []
-  );
-  fs.moveSync(
-    path.join(appPath, "editorconfig"),
-    path.join(appPath, ".editorconfig"),
-    []
-  );
   // modifies README.md commands based on user used package manager.
   if (useYarn) {
     try {

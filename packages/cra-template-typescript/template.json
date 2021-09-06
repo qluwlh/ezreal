@@ -5,20 +5,40 @@
       "@types/react": "^17.0.0",
       "@types/react-dom": "^17.0.0",
       "@types/jest": "^26.0.15",
-      "lint-staged": "^10.0.7",
-      "prettier": "^2.2.0",
-      "typescript": "^4.1.2",
+      "commitizen": "^4.2.4",
+      "cz-conventional-changelog": "^3.3.0",
+      "cz-customizable": "^6.3.0",
+      "eslint": "^7.32.0",
+      "eslint-config-soraka": "^0.1.0",
+      "husky": "^7.0.2",
+      "lint-staged": "^11.1.2",
+      "prettier": "^2.3.2",
+      "standard-version": "^9.3.1",
+      "stylelint": "^13.13.1",
+      "stylelint-config-soraka": "^0.1.1",
+      "ts-node": "^10.2.1",
+      "typescript": "^4.3.5",
       "web-vitals": "^1.0.1"
     },
     "scripts": {
-      "prettier": "prettier --write '**/*.{js,jsx,tsx,ts,less,md,json}'"
-    },
-    "gitHooks": {
-      "pre-commit": "lint-staged"
+      "lint": "yarn lint:js && yarn lint:style && yarn lint:prettier",
+      "lint:js": "eslint --cache --ext .js,.jsx,.ts,.tsx, --format=pretty",
+      "lint:style": "stylelint \"*/**/*.{css,less,scss}\"",
+      "lint:prettier": "prettier --check \"*/**/*\" --end-of-line auto",
+      "lint:fix": "yarn lint:js --fix && yarn lint:style --fix && yarn prettier",
+      "prettier": "yarn lint:prettier --write",
+      "pre-commit": "lint-staged",
+      "prepare": "husky install"
     },
     "lint-staged": {
-      "*.{js,jsx,less,md,json}": ["prettier --write"],
-      "*.ts?(x)": ["prettier --parser=typescript --write"]
+      "**/*.{css,scss.less}": "yarn lint:style",
+      "**/*.{js,jsx,ts,tsx}": "yarn lint:js",
+      "**/*.{js,jsx,ts,tsx,css,less,scss}": "yarn lint:prettier"
+    },
+    "config": {
+      "commitizen": {
+        "path": "./node_modules/cz-customizable"
+      }
     }
   }
 }

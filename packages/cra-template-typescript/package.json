@@ -21,12 +21,15 @@
     "react",
     "create-react-app",
     "template",
-    "typescript"
+    "typescript",
+    "eslint",
+    "prettier",
+    "stylelint"
   ],
   "engines": {
     "node": ">=14"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/wanglihua007/ezreal/issues"
   }
 }
