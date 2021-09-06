@@ -1,6 +1,6 @@
 {
   "name": "@wanglihua/cra-template-typescript",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "The base TypeScript template for Create React App",
   "author": "wanglihua <wanglihua@innobuddy.com>",
   "homepage": "",
