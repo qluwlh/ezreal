@@ -178,9 +178,9 @@ module.exports = function (appPath, appName, verbose, originalDirectory, templat
   let depArgs = []
   let devDepArgs = []
   if (useYarn) {
-    command = 'yarnpkg'
+    command = 'yarn'
     remove = 'remove'
-    args = ['add']
+    args = ['--registry', 'https://registry.npm.taobao.org', 'add']
   } else {
     command = 'npm'
     remove = 'uninstall'
@@ -238,6 +238,18 @@ module.exports = function (appPath, appName, verbose, originalDirectory, templat
     verifyTypeScriptSetup()
   }
 
+  if (devDepArgs.find((arg) => arg.includes('husky'))) {
+    console.log()
+    console.log(`husky install`)
+
+    const proc = spawn.sync('npx', ['husky', 'install'], {
+      stdio: 'inherit',
+    })
+    if (proc.status !== 0) {
+      console.error(`husky install failed`)
+      return
+    }
+  }
   // Remove template
   console.log(`Removing template package using ${command}...`)
   console.log()
@@ -251,10 +263,10 @@ module.exports = function (appPath, appName, verbose, originalDirectory, templat
   }
 
   // Create git commit if git repo was initialized
-  if (initializedGit && tryGitCommit(appPath)) {
-    console.log()
-    console.log('Created git commit.')
-  }
+  // if (initializedGit && tryGitCommit(appPath)) {
+  //   console.log()
+  //   console.log('Created git commit.')
+  // }
 
   // Display the most elegant way to cd.
   // This needs to handle an undefined originalDirectory for

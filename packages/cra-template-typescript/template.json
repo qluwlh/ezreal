@@ -28,7 +28,8 @@
       "lint:fix": "yarn lint:js --fix && yarn lint:style --fix && yarn prettier",
       "prettier": "yarn lint:prettier --write",
       "pre-commit": "lint-staged",
-      "prepare": "husky install"
+      "prepare": "husky install",
+      "commit": "git-cz"
     },
     "lint-staged": {
       "**/*.{css,scss.less}": "yarn lint:style",
