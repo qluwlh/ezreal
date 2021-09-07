@@ -1,15 +1,32 @@
 {
   "name": "ezreal",
   "private": true,
+  "scripts": {
+    "bootstrap": "lerna bootstrap",
+    "publish": "lerna publish",
+    "lint:prettier": "prettier --check 'packages/**/*.{js,js,jsx,tsx}'",
+    "prettier": "yarn lint:prettier --write",
+    "lint": "yarn lint:js",
+    "lint:js": "eslint 'packages/**/*.{js,js,jsx,tsx}'  --format=pretty",
+    "lint:fix": "yarn lint:js --fix",
+    "pre-commit": "lint-staged",
+    "prepare": "husky install"
+  },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "eslint": "^7.32.0",
+    "eslint-config-soraka": "^0.1.0",
+    "husky": "^7.0.2",
+    "lerna": "^4.0.0",
+    "lerna-changelog": "^2.1.0",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2",
+    "typescript": "^4.4.2"
+  },
+  "lint-staged": {
+    "packages/**/*.{js,jsx,ts,tsx}": "yarn lint"
   },
   "workspaces": [
     "packages/*"
   ],
-  "scripts": {
-    "bootstrap": "lerna bootstrap",
-    "publish": "lerna publish"
-  },
   "license": "MIT"
 }

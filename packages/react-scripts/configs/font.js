@@ -4,10 +4,10 @@ const getFontLoaders = () => {
     {
       test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
       use: {
-        loader: require.resolve("url-loader"),
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
-          mimetype: "application/font-woff",
+          mimetype: 'application/font-woff',
         },
       },
     },
@@ -15,10 +15,10 @@ const getFontLoaders = () => {
     {
       test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
       use: {
-        loader: require.resolve("url-loader"),
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
-          mimetype: "application/font-woff",
+          mimetype: 'application/font-woff',
         },
       },
     },
@@ -26,10 +26,10 @@ const getFontLoaders = () => {
     {
       test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
       use: {
-        loader: require.resolve("url-loader"),
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
-          mimetype: "font/otf",
+          mimetype: 'font/otf',
         },
       },
     },
@@ -37,20 +37,20 @@ const getFontLoaders = () => {
     {
       test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
       use: {
-        loader: require.resolve("url-loader"),
+        loader: require.resolve('url-loader'),
         options: {
           limit: 10000,
-          mimetype: "application/octet-stream",
+          mimetype: 'application/octet-stream',
         },
       },
     },
     // EOT Font
     {
       test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-      use: "file-loader",
+      use: 'file-loader',
     },
-  ];
-};
+  ]
+}
 module.exports = {
   getFontLoaders,
-};
+}

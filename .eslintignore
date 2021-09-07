@@ -1,0 +1,4 @@
+build
+dist
+node_modules
+packages/cra-template-typescript/template

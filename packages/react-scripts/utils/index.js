@@ -1,12 +1,12 @@
 const hasJsxRuntime = (() => {
   try {
-    require.resolve("react/jsx-runtime");
-    return true;
+    require.resolve('react/jsx-runtime')
+    return true
   } catch (e) {
-    return false;
+    return false
   }
-})();
+})()
 
 module.exports = {
   hasJsxRuntime,
-};
+}

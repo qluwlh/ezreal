@@ -1,58 +1,56 @@
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const webpackPaths = require("./webpack.paths.js");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const webpackPaths = require('./webpack.paths.js')
 
-const getCSSModuleLocalIdent = require("react-dev-utils/getCSSModuleLocalIdent");
+const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent')
 
-const cssRegex = /\.css$/;
-const cssModuleRegex = /\.module\.css$/;
-const sassRegex = /\.(scss|sass)$/;
-const sassModuleRegex = /\.module\.(scss|sass)$/;
+const cssRegex = /\.css$/
+const cssModuleRegex = /\.module\.css$/
+const sassRegex = /\.(scss|sass)$/
+const sassModuleRegex = /\.module\.(scss|sass)$/
 
-const lessRegex = /\.less$/;
-const lessModuleRegex = /\.module\.less$/;
+const lessRegex = /\.less$/
+const lessModuleRegex = /\.module\.less$/
 
-const isEnvDevelopment = process.env.NODE_ENV === "development";
+const isEnvDevelopment = process.env.NODE_ENV === 'development'
 
 const getLoaders = (cssOptions, preProcessor) => {
   const loaders = [
-    isEnvDevelopment && require.resolve("style-loader"),
+    isEnvDevelopment && require.resolve('style-loader'),
     !isEnvDevelopment && {
       loader: MiniCssExtractPlugin.loader,
-      options: webpackPaths.publicUrlOrPath.startsWith(".")
-        ? { publicPath: "../../" }
-        : {},
+      options: webpackPaths.publicUrlOrPath.startsWith('.') ? { publicPath: '../../' } : {},
     },
     {
-      loader: require.resolve("css-loader"),
+      loader: require.resolve('css-loader'),
       options: cssOptions,
     },
     {
-      loader: require.resolve("postcss-loader"),
+      loader: require.resolve('postcss-loader'),
       options: {
         postcssOptions: {
-          ident: "postcss",
+          ident: 'postcss',
           plugins: [
-            "postcss-flexbugs-fixes",
+            'postcss-flexbugs-fixes',
             [
-              "postcss-preset-env",
+              'postcss-preset-env',
               {
                 autoprefixer: {
-                  flexbox: "no-2009",
+                  flexbox: 'no-2009',
                 },
                 stage: 3,
               },
             ],
-            "postcss-normalize",
+            'postcss-normalize',
           ],
         },
         sourceMap: isEnvDevelopment,
       },
     },
-  ].filter(Boolean);
+  ].filter(Boolean)
   if (preProcessor) {
     loaders.push(
       {
-        loader: require.resolve("resolve-url-loader"),
+        loader: require.resolve('resolve-url-loader'),
         options: {
           sourceMap: isEnvDevelopment,
           root: webpackPaths.appSrc,
@@ -64,10 +62,10 @@ const getLoaders = (cssOptions, preProcessor) => {
           sourceMap: true,
         },
       }
-    );
+    )
   }
-  return loaders;
-};
+  return loaders
+}
 
 const getStyleLoaders = () => {
   return [
@@ -77,7 +75,7 @@ const getStyleLoaders = () => {
       use: getLoaders({
         importLoaders: 1,
         sourceMap: true,
-        modules: { mode: "icss" },
+        modules: { mode: 'icss' },
       }),
       sideEffects: true,
     },
@@ -87,7 +85,7 @@ const getStyleLoaders = () => {
         importLoaders: 1,
         sourceMap: true,
         modules: {
-          mode: "local",
+          mode: 'local',
           getLocalIdent: getCSSModuleLocalIdent,
         },
       }),
@@ -100,10 +98,10 @@ const getStyleLoaders = () => {
           importLoaders: 3,
           sourceMap: true,
           modules: {
-            mode: "icss",
+            mode: 'icss',
           },
         },
-        "sass-loader"
+        'sass-loader'
       ),
       sideEffects: true,
     },
@@ -114,11 +112,11 @@ const getStyleLoaders = () => {
           importLoaders: 3,
           sourceMap: isEnvDevelopment,
           modules: {
-            mode: "local",
+            mode: 'local',
             getLocalIdent: getCSSModuleLocalIdent,
           },
         },
-        "sass-loader"
+        'sass-loader'
       ),
     },
     {
@@ -128,9 +126,9 @@ const getStyleLoaders = () => {
         {
           importLoaders: 3,
           sourceMap: true,
-          modules: { mode: "icss" },
+          modules: { mode: 'icss' },
         },
-        "less-loader"
+        'less-loader'
       ),
       sideEffects: true,
     },
@@ -141,16 +139,16 @@ const getStyleLoaders = () => {
           importLoaders: 3,
           sourceMap: isEnvDevelopment,
           modules: {
-            mode: "local",
+            mode: 'local',
             getLocalIdent: getCSSModuleLocalIdent,
           },
         },
-        "less-loader"
+        'less-loader'
       ),
     },
-  ];
-};
+  ]
+}
 
 module.exports = {
   getStyleLoaders,
-};
+}

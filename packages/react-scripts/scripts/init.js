@@ -13,6 +13,7 @@ const { defaultBrowsers } = require('react-dev-utils/browsersHelper')
 const os = require('os')
 
 const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup')
+
 function isInGitRepository() {
   try {
     execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' })

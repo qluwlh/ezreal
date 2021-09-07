@@ -1,16 +1,16 @@
-const { hasJsxRuntime } = require("../utils");
+const { hasJsxRuntime } = require('../utils')
 
-const isEnvDevelopment = process.env.NODE_ENV === "development";
+const isEnvDevelopment = process.env.NODE_ENV === 'development'
 
-const test = /\.[jt]sx?$/;
-const exclude = /node_modules/;
-const loader = require.resolve("babel-loader");
+const test = /\.[jt]sx?$/
+const exclude = /node_modules/
+const loader = require.resolve('babel-loader')
 const presets = [
   [
-    require.resolve("@wanglihua/babel-preset-react-app"),
-    { runtime: hasJsxRuntime ? "automatic" : "classic" },
+    require.resolve('@wanglihua/babel-preset-react-app'),
+    { runtime: hasJsxRuntime ? 'automatic' : 'classic' },
   ],
-];
+]
 
 const devLoaders = [
   {
@@ -19,10 +19,10 @@ const devLoaders = [
     loader,
     options: {
       presets,
-      plugins: [require.resolve("react-refresh/babel")].filter(Boolean),
+      plugins: [require.resolve('react-refresh/babel')].filter(Boolean),
     },
   },
-];
+]
 
 const prodLoaders = [
   {
@@ -34,12 +34,12 @@ const prodLoaders = [
       cacheDirectory: true,
     },
   },
-];
+]
 
 const getBabelLoaders = () => {
-  return isEnvDevelopment ? devLoaders : prodLoaders;
-};
+  return isEnvDevelopment ? devLoaders : prodLoaders
+}
 
 module.exports = {
   getBabelLoaders,
-};
+}

@@ -111,7 +111,6 @@ function executeNodeScript({ cwd, args }, data, source) {
     child.on('close', (code) => {
       if (code !== 0) {
         reject({ command: `node ${args.join(' ')}` })
-        return
       } else {
         resolve()
       }
@@ -120,12 +119,12 @@ function executeNodeScript({ cwd, args }, data, source) {
 }
 
 function getInstallPackage() {
-  let packageToInstall = '@wanglihua/react-scripts'
+  const packageToInstall = '@wanglihua/react-scripts'
   return Promise.resolve(packageToInstall)
 }
 
 function getTemplateInstallPackage(template = 'typescript') {
-  let templateToInstall = `@wanglihua/cra-template-${template}`
+  const templateToInstall = `@wanglihua/cra-template-${template}`
   return Promise.resolve(templateToInstall)
 }
 
