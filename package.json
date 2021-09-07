@@ -4,11 +4,11 @@
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "publish": "lerna publish",
-    "lint:prettier": "prettier --check 'packages/**/*.{js,js,jsx,tsx}'",
-    "prettier": "yarn lint:prettier --write",
-    "lint": "yarn lint:js",
+    "lint": "yarn lint:js && yarn lint:prettier",
     "lint:js": "eslint 'packages/**/*.{js,js,jsx,tsx}'  --format=pretty",
-    "lint:fix": "yarn lint:js --fix",
+    "lint:prettier": "prettier --check 'packages/**/*.{js,js,jsx,tsx}'",
+    "lint:fix": "yarn lint:js --fix && yarn prettier",
+    "prettier": "yarn lint:prettier --write",
     "pre-commit": "lint-staged",
     "prepare": "husky install"
   },
