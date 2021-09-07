@@ -8,7 +8,6 @@ const sockPort = process.env.WDS_SOCKET_PORT
 const devServer = {
   bonjour: true,
   historyApiFallback: true,
-  open: true,
   hot: true,
   compress: true,
   headers: {
