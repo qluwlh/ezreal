@@ -1,6 +1,6 @@
 {
   "name": "@wanglihua/eslint-config-react-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "ESLint configuration used by Create React App",
   "repository": {
     "type": "git",
@@ -28,7 +28,7 @@
     "@rushstack/eslint-patch": "^1.0.6",
     "@typescript-eslint/eslint-plugin": "^4.0.0",
     "@typescript-eslint/parser": "^4.0.0",
-    "@wanglihua/babel-preset-react-app": "^0.1.0",
+    "@wanglihua/babel-preset-react-app": "^0.1.1",
     "confusing-browser-globals": "^1.0.10",
     "eslint-plugin-flowtype": "^5.2.0",
     "eslint-plugin-import": "^2.22.0",
