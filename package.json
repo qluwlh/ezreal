@@ -11,7 +11,8 @@
     "prettier": "yarn lint:prettier --write",
     "pre-commit": "lint-staged",
     "prepare": "husky install",
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "changelog": "lerna-changelog"
   },
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
@@ -19,6 +20,7 @@
     "commitizen": "^4.2.4",
     "cz-conventional-changelog": "^3.3.0",
     "cz-customizable": "^6.3.0",
+    "cz-lerna-changelog": "^2.0.3",
     "eslint": "^7.32.0",
     "eslint-config-soraka": "^0.1.0",
     "husky": "^7.0.2",
@@ -36,7 +38,7 @@
   ],
   "config": {
     "commitizen": {
-      "path": "./node_modules/cz-customizable"
+      "path": "./node_modules/cz-lerna-changelog"
     }
   },
   "license": "MIT"
