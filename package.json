@@ -10,9 +10,15 @@
     "lint:fix": "yarn lint:js --fix && yarn prettier",
     "prettier": "yarn lint:prettier --write",
     "pre-commit": "lint-staged",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "commit": "git-cz"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
+    "commitizen": "^4.2.4",
+    "cz-conventional-changelog": "^3.3.0",
+    "cz-customizable": "^6.3.0",
     "eslint": "^7.32.0",
     "eslint-config-soraka": "^0.1.0",
     "husky": "^7.0.2",
@@ -28,5 +34,10 @@
   "workspaces": [
     "packages/*"
   ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-customizable"
+    }
+  },
   "license": "MIT"
 }
