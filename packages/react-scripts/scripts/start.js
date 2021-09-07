@@ -29,13 +29,13 @@ if (!checkRequiredFiles([webpackPaths.appHtml, webpackPaths.appIndexJs])) {
 }
 
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 50051
-const HOST = process.env.HOST || '0.0.0.0'
+const HOST = process.env.HOST || 'localhost'
 
 const { checkBrowsers } = require('react-dev-utils/browsersHelper')
 
 checkBrowsers(webpackPaths.appRoot, isInteractive)
   .then(() => choosePort(HOST, DEFAULT_PORT))
-  .then((port) => {
+  .then(async (port) => {
     if (port == null) {
       return
     }
@@ -57,27 +57,29 @@ checkBrowsers(webpackPaths.appRoot, isInteractive)
       host: HOST,
       port,
     }
-    const devServer = new WebpackDevServer(compiler, serverConfig)
-    devServer.listen(port, HOST, (err) => {
-      if (err) {
-        return console.log(err)
-      }
+    const devServer = new WebpackDevServer(serverConfig, compiler)
+
+    try {
+      await devServer.start()
       if (isInteractive) {
         clearConsole()
       }
       console.log(chalk.cyan('Starting the development server...\n'))
       openBrowser(urls.localUrlForBrowser)
-    })
+    } catch (error) {
+      return console.log(error)
+    }
+
     ;['SIGINT', 'SIGTERM'].forEach(function (sig) {
-      process.on(sig, function () {
-        devServer.close()
+      process.on(sig, async () => {
+        await devServer.stop()
         process.exit()
       })
     })
 
     if (process.env.CI !== 'true') {
-      process.stdin.on('end', function () {
-        devServer.close()
+      process.stdin.on('end', async () => {
+        await devServer.stop()
         process.exit()
       })
     }
