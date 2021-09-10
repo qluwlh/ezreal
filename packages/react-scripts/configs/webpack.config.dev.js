@@ -21,6 +21,7 @@ module.exports = merge(baseConfig, {
     assetModuleFilename: 'static/media/[name].[hash][ext]',
     publicPath: webpackPaths.publicUrlOrPath,
   },
+  stats: 'errors-warnings',
   module: { rules: [] },
   plugins: [
     new ReactRefreshWebpackPlugin({ overlay: false }),

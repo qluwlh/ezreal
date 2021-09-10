@@ -4,7 +4,8 @@ process.env.BABEL_ENV = 'development'
 process.env.NODE_ENV = 'development'
 
 process.on('unhandledRejection', (err) => {
-  throw err
+  console.log(`unhandledRejection`, err)
+  // throw err
 })
 
 const fs = require('fs')
@@ -29,7 +30,7 @@ if (!checkRequiredFiles([webpackPaths.appHtml, webpackPaths.appIndexJs])) {
 }
 
 const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 50051
-const HOST = process.env.HOST || 'localhost'
+const HOST = process.env.HOST || '0.0.0.0'
 
 const { checkBrowsers } = require('react-dev-utils/browsersHelper')
 
@@ -65,6 +66,14 @@ checkBrowsers(webpackPaths.appRoot, isInteractive)
         clearConsole()
       }
       console.log(chalk.cyan('Starting the development server...\n'))
+      compiler.hooks.done.tap('ezreal start', (stats) => {
+        console.log()
+        console.log()
+        console.log(`  App running at:`)
+        console.log(`  - Local:   ${chalk.cyan(urls.localUrlForTerminal)}`)
+        console.log(`  - Network: ${chalk.cyan(urls.lanUrlForTerminal)}`)
+        console.log()
+      })
       openBrowser(urls.localUrlForBrowser)
     } catch (error) {
       return console.log(error)
