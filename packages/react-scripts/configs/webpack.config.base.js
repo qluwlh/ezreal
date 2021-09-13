@@ -22,6 +22,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.ts', '.tsx'],
     modules: ['node_modules', webpackPaths.appNodeModules],
+    alias: {
+      '@': webpackPaths.appSrc,
+    },
   },
   plugins: [
     new ExternalTemplateRemotesPlugin(),
