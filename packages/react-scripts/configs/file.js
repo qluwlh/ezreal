@@ -29,6 +29,10 @@ const getFileLoaders = () => {
     //   exclude: [/^$/, /\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
     //   type: "asset/resource",
     // },
+    {
+      test: /\.(mp4|webm|ogg|mp3|wav|flac|aac)(\?.*)?$/,
+      type: 'asset/resource',
+    },
   ]
 }
 module.exports = {
